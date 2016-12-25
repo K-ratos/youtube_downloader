@@ -6,6 +6,8 @@ from pytube import YouTube
 
 print('youtubedownloader++++++++++++++++++')
 sess = dryscrape.Session()
+sess.set_attribute('auto_load__images', False)
+sess.set_attribute('javascript_can_open_windows', False)
 base_url = 'https://www.youtube.com/results?search_query='
 search = input('Enter :')
 search = search.split(" ")
