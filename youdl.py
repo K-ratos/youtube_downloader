@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 import dryscrape
 from pytube import YouTube
+import re
 
 print('youtubedownloader++++++++++++++++++')
 sess = dryscrape.Session()
@@ -21,11 +22,19 @@ url = base_url+search
 sess.visit(url)
 r = sess.body()
 soup = BeautifulSoup(r, 'html.parser')
-links = soup.find_all('a' , class_='yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink spf-link ')
+link = soup.find_all('a' , class_='yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink spf-link ')
+links = []
+for x in link:
+	match = re.search('list',x['href'])
+	if match:
+		print('its a list')
+	else:
+		links.append(x)
+
 title = soup.find_all('a', class_='g-hovercard yt-uix-sessionlink spf-link ')
 l = len(links)
-print(len(title))
-print("Please chose one")
+print(str(len(title)) + " " + str(l))
+print("Please choose one")
 for x in range(0,l):
 	print (str(x+1)+'> '+links[x].string+'\n\tby'+title[x].string+'\n')
 selec = int(input())
